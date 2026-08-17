@@ -10,6 +10,7 @@ const PYTHON_FRAME =
   /^\s*File "(?<file>[^"]+)", line (?<line>\d+)(?:, in (?<fn>\S+))?/gm;
 const CLASSIC_RUNTIME =
   /undefined is not (?:a function|an object)|null is not an object|\bis not a function\b|\bis not defined\b|Cannot read propert(?:y|ies) of (?:undefined|null)|Unexpected token|Maximum call stack size exceeded|Uncaught \w+(?:Error|Exception)/i;
+const ENV_NAME = /\b([A-Z][A-Z0-9_]{2,})\b/g;
 
 export function hasClassicRuntimeError(log: string): boolean {
   return CLASSIC_RUNTIME.test(log);
