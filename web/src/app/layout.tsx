@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
-import { Fraunces, Geist, Geist_Mono } from "next/font/google";
+import { Geist_Mono, Inter } from "next/font/google";
+import { ParticlesBackground } from "@/components/particles-background";
+import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-sans",
+const inter = Inter({
   subsets: ["latin"],
+  variable: "--font-sans",
 });
 
 const geistMono = Geist_Mono({
@@ -13,25 +16,32 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
   title: "Sentinel — Find and fix errors before they cause downtime",
   description:
-    "Paste a crash log and get a plain-English briefing: what broke, why it happened, and a suggested fix. Built as a public demo of automated incident diagnosis.",
+    "Paste a crash log and get a plain-English briefing: what broke, why it happened, and a suggested fix.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`dark ${geistSans.variable} ${geistMono.variable} ${fraunces.variable} h-full antialiased`}
+      suppressHydrationWarning
+      className={cn(
+        "dark h-full font-sans antialiased",
+        inter.variable,
+        geistMono.variable,
+      )}
     >
-      <body className="min-h-full flex flex-col font-sans">
-        <TooltipProvider>{children}</TooltipProvider>
+      <body className="flex min-h-full flex-col font-sans">
+        <ThemeProvider>
+          <ParticlesBackground />
+          <TooltipProvider>
+            <div className="relative z-10 flex min-h-full flex-1 flex-col">
+              {children}
+            </div>
+          </TooltipProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
