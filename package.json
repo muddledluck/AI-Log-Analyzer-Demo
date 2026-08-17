@@ -10,5 +10,8 @@
   },
   "devDependencies": {
     "concurrently": "^9.2.0"
+  },
+  "engines": {
+    "node": ">=20.18.1"
   }
 }
